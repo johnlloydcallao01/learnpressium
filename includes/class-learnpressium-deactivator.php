@@ -15,15 +15,18 @@
 class Learnpressium_Deactivator {
 
     /**
-     * Short Description. (use period)
+     * Plugin deactivation handler
      *
-     * Long Description.
+     * Cleans up scheduled tasks and temporary data
      */
     public static function deactivate() {
+        // Clear scheduled cron jobs
+        wp_clear_scheduled_hook('learnpressium_process_scheduled_enrollments');
+
         // Flush rewrite rules
         flush_rewrite_rules();
-        
-        // Note: We don't delete options here in case user wants to reactivate
-        // Options can be cleaned up on uninstall if needed
+
+        // Note: We don't delete options or database tables here in case user wants to reactivate
+        // Data can be cleaned up on uninstall if needed
     }
 }

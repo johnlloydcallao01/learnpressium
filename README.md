@@ -1,5 +1,5 @@
 # Learnpressium
-haha
+
 A comprehensive WordPress plugin to extend LearnPress functionality with advanced trainee management, reporting, and additional features.
 
 ## Description

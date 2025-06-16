@@ -1,0 +1,410 @@
+/**
+ * Learnpressium Enrollment Admin Styles
+ */
+
+/* Modal Styles */
+.learnpressium-modal {
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+.learnpressium-modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.learnpressium-modal-header {
+    padding: 15px 20px;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+    border-radius: 4px 4px 0 0;
+}
+
+.learnpressium-modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.learnpressium-modal-close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #666;
+    line-height: 1;
+}
+
+.learnpressium-modal-close:hover {
+    color: #000;
+}
+
+.learnpressium-modal-body {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.learnpressium-modal-footer {
+    padding: 15px 20px;
+    background-color: #f1f1f1;
+    border-top: 1px solid #ddd;
+    text-align: right;
+    border-radius: 0 0 4px 4px;
+}
+
+.learnpressium-modal-footer .button {
+    margin-left: 10px;
+}
+
+/* Form Styles */
+.learnpressium-modal .form-table th {
+    width: 150px;
+    padding: 15px 10px 15px 0;
+    vertical-align: top;
+}
+
+.learnpressium-modal .form-table td {
+    padding: 15px 0;
+}
+
+.learnpressium-modal input[type="text"],
+.learnpressium-modal input[type="time"],
+.learnpressium-modal select,
+.learnpressium-modal textarea {
+    width: 100%;
+    max-width: 300px;
+}
+
+.learnpressium-modal .datepicker {
+    width: 150px;
+}
+
+.learnpressium-modal input[type="time"] {
+    width: 100px;
+    margin-left: 10px;
+}
+
+.learnpressium-modal textarea {
+    width: 100%;
+    max-width: 400px;
+    resize: vertical;
+}
+
+/* Status Styles */
+.status-scheduled {
+    color: #0073aa;
+    font-weight: bold;
+}
+
+.status-active {
+    color: #46b450;
+    font-weight: bold;
+}
+
+.status-expired {
+    color: #dc3232;
+    font-weight: bold;
+}
+
+/* Table Styles */
+.learnpressium-schedules-table {
+    margin-top: 20px;
+}
+
+.learnpressium-schedules-table th,
+.learnpressium-schedules-table td {
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.learnpressium-schedules-table th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+}
+
+.learnpressium-schedules-table .button-small {
+    padding: 2px 8px;
+    font-size: 11px;
+    line-height: 1.4;
+    margin-right: 5px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Tools Integration Styles */
+#learnpressium-scheduled-enrollment-tools .form-table th {
+    width: 200px;
+    padding: 15px 10px 15px 0;
+}
+
+#learnpressium-scheduled-enrollment-tools .form-table td {
+    padding: 15px 0;
+}
+
+#learnpressium-scheduled-enrollment-tools .datepicker {
+    width: 150px;
+}
+
+#learnpressium-scheduled-enrollment-tools input[type="time"] {
+    width: 100px;
+    margin-left: 10px;
+}
+
+#learnpressium-scheduled-enrollment-tools select[multiple] {
+    height: 120px;
+    width: 100%;
+}
+
+#learnpressium-scheduled-enrollment-tools .submit-section {
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+#learnpressium-scheduled-enrollment-tools .card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    margin-bottom: 20px;
+}
+
+#learnpressium-scheduled-enrollment-tools .card h2 {
+    margin: 0;
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+}
+
+#learnpressium-scheduled-enrollment-tools .card .description {
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+
+#learnpressium-scheduled-enrollment-tools .card .content {
+    padding: 20px;
+}
+
+/* Bulk Actions */
+.tablenav {
+    margin: 10px 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.tablenav .alignleft {
+    float: left;
+}
+
+.tablenav .alignright {
+    float: right;
+}
+
+.tablenav .actions {
+    padding: 2px 8px 0 0;
+}
+
+.tablenav .actions select {
+    margin-right: 5px;
+}
+
+.check-column {
+    width: 2.2em;
+    text-align: center;
+}
+
+.check-column input[type="checkbox"] {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .learnpressium-modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .learnpressium-modal-body {
+        padding: 15px;
+    }
+    
+    .learnpressium-modal .form-table th,
+    .learnpressium-modal .form-table td {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+    }
+    
+    .learnpressium-modal .form-table th {
+        border-bottom: none;
+        padding-bottom: 5px;
+    }
+    
+    .learnpressium-modal input[type="text"],
+    .learnpressium-modal input[type="time"],
+    .learnpressium-modal select,
+    .learnpressium-modal textarea {
+        max-width: 100%;
+    }
+    
+    .tablenav .alignleft,
+    .tablenav .alignright {
+        float: none;
+        display: block;
+        margin-bottom: 10px;
+    }
+}
+
+/* Loading States */
+.learnpressium-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.learnpressium-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #0073aa;
+    border-radius: 50%;
+    animation: learnpressium-spin 1s linear infinite;
+    margin-right: 5px;
+}
+
+@keyframes learnpressium-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Notice Styles */
+.learnpressium-notice {
+    padding: 12px;
+    margin: 15px 0;
+    border-left: 4px solid;
+    background: #fff;
+}
+
+.learnpressium-notice.notice-success {
+    border-left-color: #46b450;
+    background-color: #f7fcf0;
+}
+
+.learnpressium-notice.notice-error {
+    border-left-color: #dc3232;
+    background-color: #fef7f1;
+}
+
+.learnpressium-notice.notice-warning {
+    border-left-color: #ffb900;
+    background-color: #fff8e5;
+}
+
+.learnpressium-notice.notice-info {
+    border-left-color: #0073aa;
+    background-color: #f0f6fc;
+}
+
+/* Course and User Profile Integration */
+#learnpressium-course-schedules,
+#learnpressium-user-schedules {
+    margin-top: 20px;
+}
+
+#learnpressium-course-schedules .wp-list-table,
+#learnpressium-user-schedules .wp-list-table {
+    margin-top: 15px;
+}
+
+/* Enhanced Assignment Form Styles */
+#scheduling-options {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+#scheduling-options label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#scheduling-options input,
+#scheduling-options textarea {
+    margin-bottom: 10px;
+}
+
+#scheduling-options .datepicker {
+    width: 150px;
+}
+
+#scheduling-options input[type="time"] {
+    width: 100px;
+    margin-left: 10px;
+}
+
+#scheduling-options textarea {
+    width: 100%;
+    resize: vertical;
+}
+
+/* Accessibility Improvements */
+.learnpressium-modal-close:focus,
+.button:focus {
+    outline: 2px solid #0073aa;
+    outline-offset: 2px;
+}
+
+.screen-reader-text {
+    position: absolute !important;
+    clip: rect(1px, 1px, 1px, 1px);
+    word-wrap: normal !important;
+    border: 0;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    width: 1px;
+}
+
+/* Print Styles */
+@media print {
+    .learnpressium-modal,
+    .button,
+    .tablenav {
+        display: none !important;
+    }
+    
+    .wp-list-table {
+        border-collapse: collapse;
+    }
+    
+    .wp-list-table th,
+    .wp-list-table td {
+        border: 1px solid #000;
+        padding: 8px;
+    }
+}

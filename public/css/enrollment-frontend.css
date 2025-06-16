@@ -1,0 +1,365 @@
+/**
+ * Learnpressium Enrollment Frontend Styles
+ */
+
+/* Schedule Notice Styles */
+.learnpressium-schedule-notice {
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+    border-left: 4px solid;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.learnpressium-schedule-notice.notice-info {
+    border-left-color: #0073aa;
+    background-color: #f0f6fc;
+}
+
+.learnpressium-schedule-notice.notice-success {
+    border-left-color: #46b450;
+    background-color: #f7fcf0;
+}
+
+.learnpressium-schedule-notice.notice-warning {
+    border-left-color: #ffb900;
+    background-color: #fff8e5;
+}
+
+.learnpressium-schedule-notice h4 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.learnpressium-schedule-notice p {
+    margin: 0 0 10px 0;
+    line-height: 1.5;
+}
+
+.learnpressium-schedule-notice p:last-child {
+    margin-bottom: 0;
+}
+
+/* Course Card Schedule Badge */
+.learnpressium-course-schedule-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.learnpressium-course-schedule-badge .schedule-status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1;
+}
+
+.learnpressium-course-schedule-badge .status-scheduled {
+    background-color: #0073aa;
+}
+
+.learnpressium-course-schedule-badge .status-active {
+    background-color: #46b450;
+}
+
+.learnpressium-course-schedule-badge .status-expired {
+    background-color: #dc3232;
+}
+
+/* User Schedules Display */
+.learnpressium-user-schedules {
+    margin: 20px 0;
+}
+
+.learnpressium-user-schedules h3 {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.schedule-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.schedule-item:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.schedule-item.status-scheduled {
+    border-left: 4px solid #0073aa;
+}
+
+.schedule-item.status-active {
+    border-left: 4px solid #46b450;
+}
+
+.schedule-item.status-expired {
+    border-left: 4px solid #dc3232;
+}
+
+.schedule-course-info h4 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.schedule-course-info h4 a {
+    color: #333;
+    text-decoration: none;
+}
+
+.schedule-course-info h4 a:hover {
+    color: #0073aa;
+}
+
+.schedule-details p {
+    margin: 0 0 8px 0;
+    line-height: 1.5;
+    color: #666;
+}
+
+.schedule-details p:last-child {
+    margin-bottom: 0;
+}
+
+.schedule-details strong {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.2;
+}
+
+.status-badge.status-scheduled {
+    background-color: #0073aa;
+}
+
+.status-badge.status-active {
+    background-color: #46b450;
+}
+
+.status-badge.status-expired {
+    background-color: #dc3232;
+}
+
+/* Countdown Timer */
+.schedule-countdown {
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 10px 15px;
+    margin-top: 15px;
+}
+
+.schedule-countdown p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.countdown-timer {
+    font-weight: 600;
+    color: #0073aa;
+    font-size: 16px;
+}
+
+.countdown-timer.urgent {
+    color: #dc3232;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Course Access Blocked Message */
+.learnpressium-access-blocked {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.learnpressium-access-blocked h3 {
+    margin: 0 0 10px 0;
+    color: #856404;
+    font-size: 18px;
+}
+
+.learnpressium-access-blocked p {
+    margin: 0 0 15px 0;
+    color: #856404;
+    line-height: 1.5;
+}
+
+.learnpressium-access-blocked .countdown-display {
+    background: #fff;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 15px;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #0073aa;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .learnpressium-schedule-notice {
+        padding: 12px 15px;
+        margin: 15px 0;
+    }
+    
+    .learnpressium-course-schedule-badge {
+        position: static;
+        margin: 10px 0;
+        text-align: center;
+    }
+    
+    .schedule-item {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .schedule-course-info h4 {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+    
+    .schedule-details p {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+    
+    .countdown-timer {
+        font-size: 14px;
+    }
+    
+    .learnpressium-access-blocked {
+        padding: 15px;
+        margin: 15px 0;
+    }
+    
+    .learnpressium-access-blocked h3 {
+        font-size: 16px;
+    }
+    
+    .learnpressium-access-blocked .countdown-display {
+        font-size: 16px;
+        padding: 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .learnpressium-schedule-notice {
+        padding: 10px 12px;
+    }
+    
+    .schedule-item {
+        padding: 12px;
+    }
+    
+    .schedule-course-info h4 {
+        font-size: 15px;
+    }
+    
+    .schedule-details p {
+        font-size: 13px;
+    }
+    
+    .countdown-timer {
+        font-size: 13px;
+    }
+}
+
+/* Dark Theme Support */
+@media (prefers-color-scheme: dark) {
+    .learnpressium-schedule-notice {
+        background: #2c3e50;
+        color: #ecf0f1;
+    }
+    
+    .learnpressium-schedule-notice h4 {
+        color: #ecf0f1;
+    }
+    
+    .schedule-item {
+        background: #2c3e50;
+        border-color: #34495e;
+        color: #ecf0f1;
+    }
+    
+    .schedule-course-info h4 a {
+        color: #ecf0f1;
+    }
+    
+    .schedule-course-info h4 a:hover {
+        color: #3498db;
+    }
+    
+    .schedule-details p {
+        color: #bdc3c7;
+    }
+    
+    .schedule-details strong {
+        color: #ecf0f1;
+    }
+    
+    .schedule-countdown {
+        background: #34495e;
+        border-color: #4a5f7a;
+        color: #ecf0f1;
+    }
+    
+    .countdown-timer {
+        color: #3498db;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .learnpressium-course-schedule-badge,
+    .schedule-countdown {
+        display: none !important;
+    }
+    
+    .learnpressium-schedule-notice,
+    .schedule-item {
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+        background: #fff !important;
+        color: #000 !important;
+    }
+    
+    .schedule-course-info h4 a {
+        color: #000 !important;
+        text-decoration: underline !important;
+    }
+}

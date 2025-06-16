@@ -82,6 +82,16 @@ class Learnpressium {
         require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/trainees/class-trainees-admin.php';
         require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/trainees/class-trainees-export.php';
         require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/trainees/class-trainees-profile.php';
+
+        // Load Enrollment Module
+        require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/enrollment/class-enrollment-module.php';
+        require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/enrollment/class-enrollment-manager.php';
+        require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/enrollment/class-enrollment-access-controller.php';
+        require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/enrollment/class-enrollment-database.php';
+        require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/enrollment/class-enrollment-admin.php';
+        require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/enrollment/class-enrollment-tools-integration.php';
+        require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/enrollment/class-enrollment-profile-integration.php';
+        require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/enrollment/class-enrollment-frontend.php';
     }
 
     /**
@@ -97,6 +107,9 @@ class Learnpressium {
         // Initialize modules
         $trainees_module = new Trainees_Module();
         $trainees_module->init();
+
+        $enrollment_module = new Enrollment_Module();
+        $enrollment_module->init();
     }
 
     /**
