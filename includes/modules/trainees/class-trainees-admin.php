@@ -37,6 +37,16 @@ class Trainees_Admin {
             'trainee-profile', // Menu slug
             array($this, 'display_trainee_profile_page') // Function to display the page
         );
+
+        // Add hidden submenu page for trainees settings
+        add_submenu_page(
+            null, // No parent - hidden from menu
+            'Trainees Settings', // Page title
+            'Trainees Settings', // Menu title
+            'manage_options', // Capability required
+            'trainees-settings', // Menu slug
+            array($this, 'display_trainees_settings_page') // Function to display the page
+        );
     }
 
     /**
@@ -60,14 +70,35 @@ class Trainees_Admin {
                         <p class="page-subtitle">Manage and monitor trainee enrollment and progress</p>
                     </div>
                     <div class="header-right">
-                        <button id="export-trainees" class="modern-btn modern-btn-primary">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                <polyline points="7,10 12,15 17,10"/>
-                                <line x1="12" y1="15" x2="12" y2="3"/>
-                            </svg>
-                            Export Data
-                        </button>
+                        <div class="header-actions">
+                            <button id="export-trainees" class="modern-btn modern-btn-primary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7,10 12,15 17,10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                Export Data
+                            </button>
+
+                            <div class="dropdown-menu">
+                                <button class="dropdown-trigger" id="settings-menu-trigger">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="1"/>
+                                        <circle cx="12" cy="5" r="1"/>
+                                        <circle cx="12" cy="19" r="1"/>
+                                    </svg>
+                                </button>
+                                <div class="dropdown-content" id="settings-dropdown">
+                                    <a href="<?php echo admin_url('admin.php?page=trainees-settings'); ?>" class="dropdown-item">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="3"/>
+                                            <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+                                        </svg>
+                                        Preferences
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,6 +115,7 @@ class Trainees_Admin {
                             </svg>
                             Trainees Report - <?php echo esc_html($current_date); ?>
                         </h3>
+
                         <div class="card-stats">
                             <?php
                             // Get all users with the customer role
@@ -98,8 +130,44 @@ class Trainees_Admin {
                                     <circle cx="8.5" cy="7" r="4"/>
                                     <path d="m22 2-5 10-5-4-5 10"/>
                                 </svg>
-                                <?php echo $total_trainees; ?> Total Trainees
+                                <span id="total-trainees-count"><?php echo $total_trainees; ?></span> Total Trainees
                             </span>
+                        </div>
+                    </div>
+
+                    <!-- Search and Sort Controls -->
+                    <div class="table-controls">
+                        <div class="search-container">
+                            <div class="search-input-wrapper">
+                                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="m21 21-4.35-4.35"/>
+                                </svg>
+                                <input type="text" id="trainees-search" placeholder="Search trainees..." class="search-input">
+                                <button type="button" id="clear-search" class="clear-search" style="display: none;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="18" y1="6" x2="6" y2="18"/>
+                                        <line x1="6" y1="6" x2="18" y2="18"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="search-results-info" id="search-results-info" style="display: none;">
+                                <span id="search-results-count">0</span> results found
+                            </div>
+                        </div>
+
+                        <div class="sort-container">
+                            <label for="sort-select" class="sort-label">Sort by:</label>
+                            <select id="sort-select" class="sort-select">
+                                <option value="id-asc">ID (Ascending)</option>
+                                <option value="id-desc">ID (Descending)</option>
+                                <option value="name-asc">Name (A to Z)</option>
+                                <option value="name-desc">Name (Z to A)</option>
+                                <option value="username-asc">Username (A to Z)</option>
+                                <option value="username-desc">Username (Z to A)</option>
+                                <option value="email-asc">Email (A to Z)</option>
+                                <option value="email-desc">Email (Z to A)</option>
+                            </select>
                         </div>
                     </div>
                     <div class="card-content">
@@ -297,6 +365,16 @@ class Trainees_Admin {
                             </tr>
                         </tfoot>
                                 </table>
+
+                                <!-- No Search Results State -->
+                                <div id="no-search-results" class="no-search-results" style="display: none;">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <path d="m21 21-4.35-4.35"/>
+                                    </svg>
+                                    <h3>No trainees found</h3>
+                                    <p>Try adjusting your search terms or clear the search to see all trainees.</p>
+                                </div>
                             </div>
                             <?php
                         }
@@ -307,6 +385,14 @@ class Trainees_Admin {
         </div>
 
         <style>
+        /* CSS Variables for Theme Colors */
+        :root {
+            --learnpressium-primary: <?php echo esc_attr(get_option('learnpressium_primary_color', '#201a7c')); ?>;
+            --learnpressium-accent: <?php echo esc_attr(get_option('learnpressium_accent_color', '#ab3b43')); ?>;
+            --learnpressium-primary-rgb: <?php echo esc_attr($this->hex_to_rgb(get_option('learnpressium_primary_color', '#201a7c'))); ?>;
+            --learnpressium-accent-rgb: <?php echo esc_attr($this->hex_to_rgb(get_option('learnpressium_accent_color', '#ab3b43'))); ?>;
+        }
+
         /* Modern Trainees List Styles */
         .modern-trainees-wrapper {
             max-width: 1400px;
@@ -319,7 +405,7 @@ class Trainees_Admin {
 
         /* Modern Header */
         .modern-header {
-            background: linear-gradient(135deg, #201a7c 0%, #ab3b43 100%);
+            background: linear-gradient(135deg, var(--learnpressium-primary) 0%, var(--learnpressium-accent) 100%);
             color: white;
             padding: 2rem 0;
             margin: -20px -20px 2rem -20px;
@@ -358,6 +444,89 @@ class Trainees_Admin {
             flex-shrink: 0;
         }
 
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Dropdown Menu Styles */
+        .dropdown-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-trigger:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e5e7eb;
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+
+        .dropdown-content.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: #374151;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-radius: 0.375rem;
+            margin: 0.25rem;
+        }
+
+        .dropdown-item:hover {
+            background: #f3f4f6;
+            color: var(--learnpressium-primary);
+            text-decoration: none;
+        }
+
+        .dropdown-item svg {
+            color: #6b7280;
+            transition: color 0.2s ease;
+        }
+
+        .dropdown-item:hover svg {
+            color: var(--learnpressium-primary);
+        }
+
         /* Modern Button */
         .modern-btn {
             display: inline-flex;
@@ -374,14 +543,14 @@ class Trainees_Admin {
         }
 
         .modern-btn-primary {
-            background: linear-gradient(135deg, #201a7c 0%, #ab3b43 100%);
+            background: linear-gradient(135deg, var(--learnpressium-primary) 0%, var(--learnpressium-accent) 100%);
             color: white;
-            box-shadow: 0 4px 14px 0 rgba(32, 26, 124, 0.39);
+            box-shadow: 0 4px 14px 0 rgba(var(--learnpressium-primary-rgb), 0.39);
         }
 
         .modern-btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(32, 26, 124, 0.4);
+            box-shadow: 0 6px 20px rgba(var(--learnpressium-primary-rgb), 0.4);
         }
 
         /* Modern Content */
@@ -422,7 +591,7 @@ class Trainees_Admin {
         }
 
         .card-icon {
-            color: #201a7c;
+            color: var(--learnpressium-primary);
             flex-shrink: 0;
         }
 
@@ -436,11 +605,216 @@ class Trainees_Admin {
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: rgba(32, 26, 124, 0.1);
-            color: #201a7c;
+            background: rgba(var(--learnpressium-primary-rgb), 0.1);
+            color: var(--learnpressium-primary);
             border-radius: 0.5rem;
             font-size: 0.875rem;
             font-weight: 600;
+        }
+
+        /* Table Controls Section */
+        .table-controls {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* Search Functionality Styles */
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 3rem 0.75rem 3.25rem; /* Left padding for icon space */
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            background: white;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        /* Center the placeholder text */
+        .search-input::placeholder {
+            color: #9ca3af;
+            text-align: center;
+            text-indent: -1.625rem; /* Center the placeholder considering the left padding */
+            transition: opacity 0.2s ease;
+        }
+
+        /* Webkit browsers */
+        .search-input::-webkit-input-placeholder {
+            color: #9ca3af;
+            text-align: center;
+            text-indent: -1.625rem;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Firefox */
+        .search-input::-moz-placeholder {
+            color: #9ca3af;
+            text-align: center;
+            text-indent: -1.625rem;
+            transition: opacity 0.2s ease;
+        }
+
+        /* When input has focus or content, placeholder disappears */
+        .search-input:focus::placeholder {
+            opacity: 0;
+        }
+
+        /* Hide placeholder when input has content */
+        .search-input.has-content::placeholder {
+            opacity: 0;
+        }
+
+        .search-input:focus {
+            border-color: var(--learnpressium-primary);
+            box-shadow: 0 0 0 3px rgba(var(--learnpressium-primary-rgb), 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem; /* Positioned with proper spacing from left edge */
+            top: 50%;
+            transform: translateY(-50%); /* Center vertically */
+            color: #9ca3af;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 1rem; /* Consistent spacing with search icon */
+            top: 50%;
+            transform: translateY(-50%); /* Center vertically */
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+            transition: all 0.2s ease;
+        }
+
+        .clear-search:hover {
+            color: #374151;
+            background: #f3f4f6;
+        }
+
+        .search-results-info {
+            font-size: 0.75rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        /* Sort Functionality Styles */
+        .sort-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .sort-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #374151;
+            white-space: nowrap;
+        }
+
+        .sort-select {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            background: white;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+            min-width: 180px;
+        }
+
+        .sort-select:focus {
+            border-color: var(--learnpressium-primary);
+            box-shadow: 0 0 0 3px rgba(var(--learnpressium-primary-rgb), 0.1);
+        }
+
+        .sort-select:hover {
+            border-color: #d1d5db;
+        }
+
+        /* Search highlighting */
+        .search-highlight {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.1rem 0.2rem;
+            border-radius: 0.2rem;
+            font-weight: 600;
+        }
+
+        /* No search results state */
+        .no-search-results {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #6b7280;
+        }
+
+        .no-search-results svg {
+            margin: 0 auto 1rem;
+            color: #d1d5db;
+        }
+
+        .no-search-results h3 {
+            margin: 0 0 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .no-search-results p {
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive design for table controls */
+        @media (max-width: 768px) {
+            .table-controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+
+            .search-container {
+                max-width: none;
+            }
+
+            .sort-container {
+                justify-content: space-between;
+            }
+
+            .sort-select {
+                min-width: auto;
+                flex: 1;
+            }
         }
 
         .card-content {
@@ -473,13 +847,52 @@ class Trainees_Admin {
 
         /* Modern Table */
         .modern-table-container {
-            overflow-x: auto;
+            position: relative;
+            overflow: auto;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            max-height: 600px; /* Taller table - approximately 8-9 rows + header */
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+        }
+
+        .modern-table-container:active {
+            cursor: grabbing;
+        }
+
+        /* Custom thin scrollbars for both directions */
+        .modern-table-container::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        .modern-table-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .modern-table-container::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+        }
+
+        .modern-table-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .modern-table-container::-webkit-scrollbar-corner {
+            background: transparent;
         }
 
         .modern-table {
             width: 100%;
             border-collapse: collapse;
             min-width: 1000px;
+            position: relative;
         }
 
         .modern-table th {
@@ -492,6 +905,24 @@ class Trainees_Admin {
             text-transform: uppercase;
             letter-spacing: 0.05em;
             border-bottom: 2px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        /* Sort indicators */
+        .modern-table th.sorted-asc::after {
+            content: ' ↑';
+            color: var(--learnpressium-primary);
+            font-weight: bold;
+        }
+
+        .modern-table th.sorted-desc::after {
+            content: ' ↓';
+            color: var(--learnpressium-primary);
+            font-weight: bold;
         }
 
         .modern-table td {
@@ -508,6 +939,34 @@ class Trainees_Admin {
             background: #f8fafc;
         }
 
+        /* Prevent text selection during swipe */
+        .modern-table-container.dragging {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Only prevent pointer events on text content, not on interactive elements */
+        .modern-table-container.dragging .trainee-name,
+        .modern-table-container.dragging .course-tag,
+        .modern-table-container.dragging .modern-badge {
+            pointer-events: none;
+        }
+
+        /* Clean table background */
+        .modern-table-container {
+            background: white;
+            /* Ensure no visual artifacts or stains */
+            box-shadow: none;
+        }
+
+        /* Remove any potential visual artifacts */
+        .modern-table-container::before,
+        .modern-table-container::after {
+            display: none;
+        }
+
         /* Column Specific Styles */
         .column-id {
             width: 80px;
@@ -519,7 +978,7 @@ class Trainees_Admin {
             justify-content: center;
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, #201a7c 0%, #ab3b43 100%);
+            background: linear-gradient(135deg, var(--learnpressium-primary) 0%, var(--learnpressium-accent) 100%);
             color: white;
             border-radius: 50%;
             font-weight: 600;
@@ -557,7 +1016,7 @@ class Trainees_Admin {
             display: inline-flex;
             align-items: center;
             gap: 0.375rem;
-            color: #201a7c;
+            color: var(--learnpressium-primary);
             text-decoration: none;
             font-size: 0.875rem;
             font-weight: 500;
@@ -565,7 +1024,7 @@ class Trainees_Admin {
         }
 
         .action-link:hover {
-            color: #ab3b43;
+            color: var(--learnpressium-accent);
         }
 
         /* Modern Badges */
@@ -696,5 +1155,30 @@ class Trainees_Admin {
     public function display_trainee_profile_page() {
         $profile = new Trainees_Profile();
         $profile->display_profile_page();
+    }
+
+    /**
+     * Display the trainees settings page
+     */
+    public function display_trainees_settings_page() {
+        $settings = new Trainees_Settings();
+        $settings->display_settings_page();
+    }
+
+    /**
+     * Convert hex color to RGB values
+     */
+    private function hex_to_rgb($hex) {
+        $hex = ltrim($hex, '#');
+
+        if (strlen($hex) == 3) {
+            $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+        }
+
+        $r = hexdec(substr($hex, 0, 2));
+        $g = hexdec(substr($hex, 2, 2));
+        $b = hexdec(substr($hex, 4, 2));
+
+        return "$r, $g, $b";
     }
 }

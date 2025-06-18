@@ -82,6 +82,8 @@ class Learnpressium {
         require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/trainees/class-trainees-admin.php';
         require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/trainees/class-trainees-export.php';
         require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/trainees/class-trainees-profile.php';
+        require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/trainees/class-trainees-scripts.php';
+        require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/trainees/class-trainees-settings.php';
 
         // Load Enrollment Module
         require_once LEARNPRESSIUM_PLUGIN_DIR . 'includes/modules/enrollment/class-enrollment-module.php';

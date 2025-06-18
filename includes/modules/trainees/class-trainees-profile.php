@@ -811,6 +811,14 @@ class Trainees_Profile {
         </form>
 
         <style>
+        /* CSS Variables for Theme Colors */
+        :root {
+            --learnpressium-primary: <?php echo esc_attr(get_option('learnpressium_primary_color', '#201a7c')); ?>;
+            --learnpressium-accent: <?php echo esc_attr(get_option('learnpressium_accent_color', '#ab3b43')); ?>;
+            --learnpressium-primary-rgb: <?php echo esc_attr($this->hex_to_rgb(get_option('learnpressium_primary_color', '#201a7c'))); ?>;
+            --learnpressium-accent-rgb: <?php echo esc_attr($this->hex_to_rgb(get_option('learnpressium_accent_color', '#ab3b43'))); ?>;
+        }
+
         /* Modern Trainee Profile Styles */
         .modern-trainee-wrapper {
             max-width: 1200px;
@@ -823,7 +831,7 @@ class Trainees_Profile {
 
         /* Modern Header */
         .modern-header {
-            background: linear-gradient(135deg, #201a7c 0%, #ab3b43 100%);
+            background: linear-gradient(135deg, var(--learnpressium-primary) 0%, var(--learnpressium-accent) 100%);
             color: white;
             padding: 2rem 0;
             margin: -20px -20px 2rem -20px;
@@ -882,9 +890,9 @@ class Trainees_Profile {
         }
 
         .modern-btn-primary {
-            background: linear-gradient(135deg, #201a7c 0%, #ab3b43 100%);
+            background: linear-gradient(135deg, var(--learnpressium-primary) 0%, var(--learnpressium-accent) 100%);
             color: white;
-            box-shadow: 0 4px 14px 0 rgba(32, 26, 124, 0.39);
+            box-shadow: 0 4px 14px 0 rgba(var(--learnpressium-primary-rgb), 0.39);
         }
 
         .modern-btn-primary:hover {
@@ -960,7 +968,7 @@ class Trainees_Profile {
         }
 
         .card-icon {
-            color: #201a7c;
+            color: var(--learnpressium-primary);
             flex-shrink: 0;
         }
 
@@ -1011,8 +1019,8 @@ class Trainees_Profile {
 
         .form-input:focus, .form-select:focus, .form-textarea:focus {
             outline: none;
-            border-color: #201a7c;
-            box-shadow: 0 0 0 3px rgba(32, 26, 124, 0.1);
+            border-color: var(--learnpressium-primary);
+            box-shadow: 0 0 0 3px rgba(var(--learnpressium-primary-rgb), 0.1);
         }
 
         .form-input::placeholder {
@@ -1035,7 +1043,7 @@ class Trainees_Profile {
         }
 
         .file-upload-area:hover {
-            border-color: #201a7c;
+            border-color: var(--learnpressium-primary);
             background: #f0f1ff;
         }
 
@@ -1162,7 +1170,7 @@ class Trainees_Profile {
         }
 
         .upload-tab.active {
-            background: #201a7c;
+            background: var(--learnpressium-primary);
             color: white;
         }
 
@@ -1194,7 +1202,7 @@ class Trainees_Profile {
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #201a7c 0%, #ab3b43 100%);
+            background: linear-gradient(135deg, var(--learnpressium-primary) 0%, var(--learnpressium-accent) 100%);
             color: white;
             border: none;
             border-radius: 0.5rem;
@@ -1230,7 +1238,7 @@ class Trainees_Profile {
 
         .remove-selected {
             padding: 0.5rem 1rem;
-            background: #ab3b43;
+            background: var(--learnpressium-accent);
             color: white;
             border: none;
             border-radius: 0.375rem;
@@ -1304,8 +1312,8 @@ class Trainees_Profile {
         }
 
         .status-item:hover {
-            border-color: #201a7c;
-            box-shadow: 0 4px 6px -1px rgba(32, 26, 124, 0.1);
+            border-color: var(--learnpressium-primary);
+            box-shadow: 0 4px 6px -1px rgba(var(--learnpressium-primary-rgb), 0.1);
         }
 
         .status-header {
@@ -1377,8 +1385,8 @@ class Trainees_Profile {
         }
 
         .course-item:hover {
-            border-color: #201a7c;
-            box-shadow: 0 2px 4px rgba(32, 26, 124, 0.1);
+            border-color: var(--learnpressium-primary);
+            box-shadow: 0 2px 4px rgba(var(--learnpressium-primary-rgb), 0.1);
         }
 
         .course-item.enrolled {
@@ -1631,5 +1639,22 @@ class Trainees_Profile {
         wp_update_attachment_metadata($attachment_id, $attachment_data);
 
         return $attachment_id;
+    }
+
+    /**
+     * Convert hex color to RGB values
+     */
+    private function hex_to_rgb($hex) {
+        $hex = ltrim($hex, '#');
+
+        if (strlen($hex) == 3) {
+            $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+        }
+
+        $r = hexdec(substr($hex, 0, 2));
+        $g = hexdec(substr($hex, 2, 2));
+        $b = hexdec(substr($hex, 4, 2));
+
+        return "$r, $g, $b";
     }
 }

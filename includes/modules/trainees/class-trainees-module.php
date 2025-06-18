@@ -31,6 +31,16 @@ class Trainees_Module {
     private $profile;
 
     /**
+     * The scripts handler
+     */
+    private $scripts;
+
+    /**
+     * The settings handler
+     */
+    private $settings;
+
+    /**
      * Initialize the module
      */
     public function init() {
@@ -38,10 +48,13 @@ class Trainees_Module {
         $this->admin = new Trainees_Admin();
         $this->export = new Trainees_Export();
         $this->profile = new Trainees_Profile();
+        $this->scripts = new Trainees_Scripts();
+        $this->settings = new Trainees_Settings();
 
         // Hook into WordPress
         add_action('admin_menu', array($this->admin, 'add_admin_menu'));
         add_action('admin_enqueue_scripts', array($this->export, 'enqueue_scripts'));
+        add_action('admin_enqueue_scripts', array($this->scripts, 'enqueue_scripts'));
         add_action('admin_footer', array($this->export, 'add_export_script'));
     }
 
