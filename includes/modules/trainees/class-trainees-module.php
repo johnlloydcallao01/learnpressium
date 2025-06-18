@@ -101,4 +101,33 @@ class Trainees_Module {
 
         return $courses;
     }
+
+    /**
+     * Get scheduled courses for a user
+     *
+     * @param int $user_id The user ID
+     * @return array Array of course objects with schedule information
+     */
+    public static function get_user_scheduled_courses($user_id) {
+        global $wpdb;
+
+        // Get scheduled courses from learnpressium_enrollment_schedules table
+        $scheduled_table = $wpdb->prefix . 'learnpressium_enrollment_schedules';
+        $query = $wpdb->prepare(
+            "SELECT p.ID, p.post_title, es.scheduled_start_date, es.status
+            FROM {$scheduled_table} es
+            JOIN {$wpdb->posts} p ON p.ID = es.course_id
+            WHERE es.user_id = %d
+            AND es.status = %s
+            AND p.post_type = %s
+            ORDER BY es.scheduled_start_date ASC",
+            $user_id,
+            'pending',
+            'lp_course'
+        );
+
+        $courses = $wpdb->get_results($query);
+
+        return $courses;
+    }
 }

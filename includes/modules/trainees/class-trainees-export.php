@@ -81,7 +81,7 @@ class Trainees_Export {
 
             // Create a sparse worksheet instead of using aoa_to_sheet
             const ws = {};
-            const range = { s: { c: 0, r: 0 }, e: { c: 7, r: 0 } };
+            const range = { s: { c: 0, r: 0 }, e: { c: 9, r: 0 } }; // Updated to include 2 new columns
 
             // Helper function to set cell value and style
             function setCellValue(ws, row, col, value, style = {}) {
@@ -147,30 +147,37 @@ class Trainees_Export {
                 // Track the starting row for this trainee
                 const startRow = currentRow;
 
-                // Get basic trainee data
-                const id = row.querySelector('.column-id').textContent.trim();
-                const name = row.querySelector('.column-name').textContent.trim();
+                // Get basic trainee data - updated for modern table structure
+                const id = row.querySelector('.column-id .id-badge').textContent.trim();
+                const name = row.querySelector('.column-name .trainee-name').textContent.trim();
                 const username = row.querySelector('.column-username').textContent.trim();
                 const email = row.querySelector('.column-email').textContent.trim();
-                const enrolledStatus = row.querySelector('.column-enrolled .enrollment-status').textContent.trim();
-                const activeEnrolledStatus = row.querySelector('.column-active-enrolled .enrollment-status').textContent.trim();
+                const enrolledStatus = row.querySelector('.column-enrolled .modern-badge').textContent.trim();
+                const activeEnrolledStatus = row.querySelector('.column-active-enrolled .modern-badge').textContent.trim();
+                const scheduledStatus = row.querySelector('.column-scheduled .modern-badge').textContent.trim();
 
-                // Process enrolled courses
+                // Process enrolled courses - updated for modern table structure
                 const coursesCell = row.querySelector('.column-enrolled-courses');
-                const coursesList = coursesCell.querySelector('.enrolled-courses-list');
+                const coursesList = coursesCell.querySelector('.courses-list');
 
                 // Process active enrolled courses
                 const activeCoursesCell = row.querySelector('.column-active-enrolled-courses');
-                const activeCoursesList = activeCoursesCell.querySelector('.enrolled-courses-list');
+                const activeCoursesList = activeCoursesCell.querySelector('.courses-list');
+
+                // Process scheduled courses - NEW
+                const scheduledCoursesCell = row.querySelector('.column-scheduled-courses');
+                const scheduledCoursesList = scheduledCoursesCell.querySelector('.courses-list');
 
                 // Determine how many rows we need for this trainee
                 let courseCount = 0;
                 let courses = [];
                 let activeCoursesCount = 0;
                 let activeCourses = [];
+                let scheduledCoursesCount = 0;
+                let scheduledCourses = [];
 
                 if (coursesList) {
-                    const courseItems = coursesList.querySelectorAll('li');
+                    const courseItems = coursesList.querySelectorAll('.course-tag');
                     courseItems.forEach((item, index) => {
                         courses.push((index + 1) + '. ' + item.textContent.trim());
                     });
@@ -178,15 +185,26 @@ class Trainees_Export {
                 }
 
                 if (activeCoursesList) {
-                    const activeCourseItems = activeCoursesList.querySelectorAll('li');
+                    const activeCourseItems = activeCoursesList.querySelectorAll('.course-tag');
                     activeCourseItems.forEach((item, index) => {
                         activeCourses.push((index + 1) + '. ' + item.textContent.trim());
                     });
                     activeCoursesCount = activeCourses.length;
                 }
 
+                if (scheduledCoursesList) {
+                    const scheduledCourseItems = scheduledCoursesList.querySelectorAll('.course-tag');
+                    scheduledCourseItems.forEach((item, index) => {
+                        const title = item.textContent.trim();
+                        const date = item.getAttribute('title') || '';
+                        const courseText = date ? title + ' (' + date + ')' : title;
+                        scheduledCourses.push((index + 1) + '. ' + courseText);
+                    });
+                    scheduledCoursesCount = scheduledCourses.length;
+                }
+
                 // We need at least one row even if there are no courses
-                const rowsNeeded = Math.max(1, courseCount, activeCoursesCount);
+                const rowsNeeded = Math.max(1, courseCount, activeCoursesCount, scheduledCoursesCount);
 
                 // For each row needed for this trainee
                 for (let i = 0; i < rowsNeeded; i++) {
@@ -200,6 +218,7 @@ class Trainees_Export {
                         setCellValue(ws, rowNum, 3, email);
                         setCellValue(ws, rowNum, 4, enrolledStatus);
                         setCellValue(ws, rowNum, 6, activeEnrolledStatus);
+                        setCellValue(ws, rowNum, 8, scheduledStatus); // NEW: Has Scheduled Courses
                     }
 
                     // Add enrolled course in its own cell if available
@@ -245,6 +264,28 @@ class Trainees_Export {
                             }
                         });
                     }
+
+                    // Add scheduled course in its own cell if available - NEW
+                    if (i < scheduledCoursesCount) {
+                        setCellValue(ws, rowNum, 9, scheduledCourses[i], {
+                            alignment: {
+                                vertical: 'center',
+                                horizontal: 'left'
+                            }
+                        });
+                    } else if (i === 0 && scheduledCoursesCount === 0) {
+                        // No scheduled courses case
+                        setCellValue(ws, rowNum, 9, 'No scheduled courses', {
+                            alignment: {
+                                vertical: 'center',
+                                horizontal: 'left'
+                            },
+                            font: {
+                                italic: true,
+                                color: { rgb: "999999" }
+                            }
+                        });
+                    }
                 }
 
                 // Update the current row for the next trainee
@@ -266,7 +307,9 @@ class Trainees_Export {
                 {wch: 10}, // Enrolled
                 {wch: 50}, // Enrolled Courses
                 {wch: 15}, // Has Active Enrolled Courses
-                {wch: 50}  // Active Enrolled Courses
+                {wch: 50}, // Active Enrolled Courses
+                {wch: 15}, // Has Scheduled Courses - NEW
+                {wch: 50}  // Scheduled Courses - NEW
             ];
             ws['!cols'] = columnWidths;
 
@@ -283,7 +326,7 @@ class Trainees_Export {
 
             // Merge cells for the title (first row, spans all columns)
             ws['!merges'] = [
-                { s: {r: 0, c: 0}, e: {r: 0, c: 7} } // Merge first row across all columns
+                { s: {r: 0, c: 0}, e: {r: 0, c: 9} } // Merge first row across all columns (updated for 10 columns)
             ];
 
             // Add worksheet to workbook
