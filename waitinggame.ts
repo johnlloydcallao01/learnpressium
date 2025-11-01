@@ -9,7 +9,7 @@ const fetchHerSoul = async (today: Date) => {
     if (!isSameDate(today, 2025, 11, 1)) return { status: 'ignored' };
     let attempts = 0; 
     let res: Response;
-    do { res = await paramdam("Paramdam: Notice me 😭"); attempts++; } 
+    do { res = await paramdam("Paramdam: Notice me 😭🕯"); attempts++; } 
     while (res==='ignored' && attempts<3);
     if (res==='accepted') { await sendFlowers(); return { status:'accepted', attempts }; }
     const valentine = createDate(2026,2,14);
